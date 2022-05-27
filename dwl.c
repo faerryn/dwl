@@ -1107,6 +1107,16 @@ focusclient(Client *c, int lift)
 	struct wlr_keyboard *kb;
 	int i;
 
+	/* Warp cursor to center of client if it is outside */
+	if (c && (cursor->x < c->geom.x ||
+		cursor->x > c->geom.x + c->geom.width ||
+		cursor->y < c->geom.y ||
+		cursor->y > c->geom.y + c->geom.height))
+		wlr_cursor_warp_closest( cursor,
+			  NULL,
+			  c->geom.x + c->geom.width / 2.0,
+			  c->geom.y + c->geom.height / 2.0);
+
 	/* Raise client in stacking order if requested */
 	if (c && lift)
 		wlr_scene_node_raise_to_top(c->scene);
