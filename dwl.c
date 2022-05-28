@@ -491,7 +491,7 @@ arrange(Monitor *m)
 		m->lt[m->sellt]->arrange(m);
 	/* TODO recheck pointer focus here... or in resize()? */
 	c = selclient();
-	if (c)
+	if (cursor_warp && c)
 		warpcursor(c);
 }
 
@@ -1112,7 +1112,7 @@ focusclient(Client *c, int lift)
 	int i;
 
 	/* Warp cursor to center of client if it is outside */
-	if (c)
+	if (cursor_warp && c)
 		warpcursor(c);
 
 	/* Raise client in stacking order if requested */
